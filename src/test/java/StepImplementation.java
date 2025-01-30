@@ -1,11 +1,11 @@
 
 import com.thoughtworks.gauge.Step;
+import com.thoughtworks.gauge.Table;
+import com.thoughtworks.gauge.TableRow;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import java.time.Duration;
@@ -129,7 +129,35 @@ public class StepImplementation {
         return productPriceNumberList;
     }
 
+    @Step("Sort products by <sort_option>")
+    public void sortOptionTableProducts(String sort_option) {
+        WebDriver driver = Driver.getDriver();
+            switch (sort_option) {
+                case "Name (A to Z)":
+                    sortingAZ(driver);
+                case "Name (Z to A)":
+                    sortingZA(driver);
+                case "Price (low to high)":
+                    sortingPriceLowToHigh(driver);
+                case "Price (high to low)":
+                    sortingPriceHighToLow(driver);
+        }
+    }
 
+    @Step("Verify products are sorted by <sort_criteria>")
+    public void sortCriteriaTableProducts(String sort_criteria) {
+        WebDriver driver = Driver.getDriver();
+        switch (sort_criteria) {
+            case "name":
+                sortingAZ(driver);
+            case "name_desc":
+                sortingZA(driver);
+            case "price":
+                sortingPriceLowToHigh(driver);
+            case "price_desc":
+                sortingPriceHighToLow(driver);
+        }
+    }
     @Step("Close the browser")
     public void closeBrowser() {
         Driver.closeDriver();
