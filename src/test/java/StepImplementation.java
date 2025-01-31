@@ -12,6 +12,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class StepImplementation {
 
@@ -150,13 +151,81 @@ public class StepImplementation {
         switch (sort_criteria) {
             case "name":
                 sortingAZ(driver);
+                break;
             case "name_desc":
                 sortingZA(driver);
+                break;
             case "price":
                 sortingPriceLowToHigh(driver);
+                break;
             case "price_desc":
                 sortingPriceHighToLow(driver);
+                break;
         }
+    }
+
+    @Step("Add product <product_name> to cart")
+    public void addProductTableToCart(String product_name) {
+        WebDriver driver = Driver.getDriver();
+        String locator;
+        WebElement addButton;
+
+        switch (product_name) {
+            case "Sauce Labs Backpack":
+                locator = "add-to-cart-sauce-labs-backpack";
+                addButton = driver.findElement(By.id(locator));
+                addButton.click();
+                break;
+            case "Sauce Labs Bike Light":
+                locator = "add-to-cart-sauce-labs-bike-light";
+                addButton = driver.findElement(By.id(locator));
+                addButton.click();
+                break;
+            case "Sauce Labs Bolt T-Shirt":
+                locator = "add-to-cart-sauce-labs-bolt-t-shirt";
+                addButton = driver.findElement(By.id(locator));
+                addButton.click();
+                break;
+            case "Sauce Labs Onesie":
+                locator = "add-to-cart-sauce-labs-onesie";
+                addButton = driver.findElement(By.id(locator));
+                addButton.click();
+                break;
+        }
+    }
+
+    @Step("Verify cart badge shows correct count")
+    public void verifyCartCount() {
+        WebDriver driver = Driver.getDriver();
+        WebElement cartBadge = driver.findElement(By.className("shopping_cart_badge"));
+        //int foo = Integer.parseInt(myString);
+        List<WebElement> removeButtonsVisible = driver.findElements(By.className("btn_secondary"));
+        int removeButtonsVisibleQuantity = removeButtonsVisible.size();
+        int productsQuantity = Integer.parseInt(cartBadge.getText());
+        System.out.println("CartBadge: " + productsQuantity);
+        Assert.assertEquals(productsQuantity, removeButtonsVisibleQuantity);
+    }
+
+    @Step("Verify <product_name> appears in cart")
+    public void verifyCartItems(String product_name) {
+        WebDriver driver = Driver.getDriver();
+        WebElement cartLink = driver.findElement(By.className("shopping_cart_link"));
+        cartLink.click();
+        Assert.assertEquals(driver.getCurrentUrl(), "https://www.saucedemo.com/cart.html");
+        WebElement productName = driver.findElement(By.xpath("//*[contains(text(), product_name)]"));
+        System.out.println(productName);
+        Assert.assertTrue(productName.isDisplayed());
+    }
+
+    @Step("Remove all products from cart")
+    public void removeProducts() {
+        WebDriver driver = Driver.getDriver();
+        WebElement cartBadge = driver.findElement(By.className("shopping_cart_badge"));
+        while (cartBadge.isDisplayed()) {
+            WebElement removeButton = driver.findElement(By.xpath("//button[starts-with(@id, 'remove')]"));
+            removeButton.click();
+        }
+
     }
     @Step("Close the browser")
     public void closeBrowser() {

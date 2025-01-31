@@ -8,24 +8,23 @@ Created by jknobbe on 1/30/2025
     |Price Low-High|price        |Sauce Labs Bolt T-Shirt|
     |Price High-Low|price_desc   |Sauce Labs Onesie      |
 
-Test product sorting functionality
-----------------------------------
-
 * Open browser and navigate to "https://www.saucedemo.com"
 * Login using the standard user credentials
 * Verify if inventory page loads
+
+Test product sorting functionality
+----------------------------------
 * Sort products by <sort_option>
 * Verify products are sorted by <sort_criteria>
 
 Add multiple products to cart
 -----------------------------
-* Open browser and navigate to "https://www.saucedemo.com"
-* Login using the standard user credentials
-* Verify if inventory page loads
-Add product <product_name> to cart
-Verify cart badge shows correct count
-Verify product appears in cart
+Verify existing products in cart
+* Add product <product_name> to cart
+* Verify cart badge shows correct count
+* Verify <product_name> appears in cart
 
-____
-* Close the browser
+___
+
+Close the browser
 
