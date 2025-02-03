@@ -26,5 +26,5 @@ Verify existing products in cart
 
 ___
 
-Close the browser
+* Close the browser
 
